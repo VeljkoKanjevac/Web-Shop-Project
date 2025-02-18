@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminProductsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AdminCheckMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,11 @@ Route::middleware('auth')->group(function () {
 //Admin routes
 Route::middleware(['auth', AdminCheckMiddleware::class])->prefix('/admin')->group(function () {
 
+    Route::controller(AdminProductsController::class)->prefix('/product')->name('product.')->group(function () {
+
+        Route::get('/', 'index');
+        Route::get('/all', 'allProducts')->name('all');
+    });
 
 });
 
