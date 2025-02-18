@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 //User routes
 Route::middleware('auth')->group(function () {
@@ -28,9 +28,10 @@ Route::middleware('auth')->group(function () {
 //Admin routes
 Route::middleware(['auth', AdminCheckMiddleware::class])->prefix('/admin')->group(function () {
 
+    Route::view('/', 'admin.welcome')->name('admin.home');
+
     Route::controller(AdminProductsController::class)->prefix('/product')->name('product.')->group(function () {
 
-        Route::get('/', 'index');
         Route::get('/all', 'allProducts')->name('all');
     });
 
